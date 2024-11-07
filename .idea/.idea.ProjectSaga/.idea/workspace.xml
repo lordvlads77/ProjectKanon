@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f6df020-d866-4b44-b328-a667feda12fc" name="Changes" comment="" />
+    <list default="true" id="1f6df020-d866-4b44-b328-a667feda12fc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectSaga/.idea/indexLayout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/OnlineGame.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/OnlineGame.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/[Animations]/Humanoid.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/[Animations]/Humanoid.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/[Animations]/Withdrawing Sword.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/[Animations]/Withdrawing Sword.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/[Scripts]/AnimationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/[Scripts]/AnimationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/[Scripts]/GameManager/PickUpSys.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/[Scripts]/GameManager/PickUpSys.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,7 +47,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "PCVersion",
+    "git-widget-placeholder": "Attack",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -163,6 +170,7 @@
       <workItem from="1728704799387" duration="83000" />
       <workItem from="1728704921737" duration="2331000" />
       <workItem from="1730681541905" duration="1755000" />
+      <workItem from="1731000480834" duration="6305000" />
     </task>
     <servers />
   </component>

@@ -11,6 +11,7 @@ namespace ProjectSaga
         [SerializeField] private Animator _animator = default;
         private readonly int _IsMoving = Animator.StringToHash("isMoving");
         private readonly int _isJumping = Animator.StringToHash("isJumping");
+        private readonly int _Withdrawing = Animator.StringToHash("Withdrawing");
 
         public void Awake()
         {
@@ -39,6 +40,11 @@ namespace ProjectSaga
         public void notJumping()
         {
             _animator.SetBool(_isJumping, false);
+        }
+
+        public void WithdrawingWeapon()
+        {
+            _animator.SetTrigger(_Withdrawing);
         }
     }
 }
