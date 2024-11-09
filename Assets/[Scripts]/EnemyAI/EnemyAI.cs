@@ -12,10 +12,8 @@ public class EnemyAI : MonoBehaviour
     public Transform player;
     public LayerMask whatisGround;
     public LayerMask whatisPlayer;
-    public float enemyHealth;
-    public Animator anim;
-    
-    
+
+
     [Header("Patrolling")] 
     public Vector3 walkPoint;
     private bool walkPointSet;
@@ -24,8 +22,7 @@ public class EnemyAI : MonoBehaviour
     [Header("Attacking")]
     public float timeBetweenAttacks;
     private bool alreadyAttacked;
-    public GameObject projectile;
-    
+
     [Header("States")]
     public float sightRange;
     public float attackRange;
@@ -68,7 +65,7 @@ public class EnemyAI : MonoBehaviour
         if (walkPointSet)
         {
             agent.SetDestination(walkPoint);
-            AnimationController.Instance.Moving();
+            
         }
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
@@ -95,6 +92,7 @@ public class EnemyAI : MonoBehaviour
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
+        AnimationController.Instance.ZombieMove();
     }
 
     private void AttackPlayer()
@@ -105,10 +103,8 @@ public class EnemyAI : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-            
+            AnimationController.Instance.ZombieAttack();
+            Debug.Log("Attacked");
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -118,22 +114,7 @@ public class EnemyAI : MonoBehaviour
     {
         alreadyAttacked = false;
     }
-
-    public void TakeDamage(int damage)
-    {
-        enemyHealth -= damage;
-
-        if (enemyHealth <= 0)
-        {
-            Invoke(nameof(DestroyEnemy), .5f);
-        }
-    }
-
-    public void DestroyEnemy()
-    {
-        Destroy(gameObject);
-    }
-
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

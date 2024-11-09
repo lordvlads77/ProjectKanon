@@ -16,6 +16,9 @@ namespace ProjectSaga
         private readonly int _jumping = Animator.StringToHash("jumping");
         private readonly int _sheating = Animator.StringToHash("Sheathing");
         private readonly int _swordJumping = Animator.StringToHash("SwordJump");
+        private readonly int _speed = Animator.StringToHash("speed");
+        private readonly int _zombieAttack = Animator.StringToHash("zombieAttack");
+        
 
         public void Awake()
         {
@@ -69,6 +72,16 @@ namespace ProjectSaga
         public void SwordJumping()
         {
             _animator.SetTrigger(_swordJumping);
+        }
+
+        public void ZombieMove()
+        {
+            _animator.SetFloat(_speed, 1);
+        }
+        
+        public void ZombieAttack()
+        {
+            _animator.SetTrigger(_zombieAttack);
         }
     }
 }
