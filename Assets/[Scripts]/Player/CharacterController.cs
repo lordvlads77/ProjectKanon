@@ -45,16 +45,39 @@ public class CharacterController : MonoBehaviour
         {
             transform.Rotate(Vector3.up * velocidadRotacion * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.Space) && isGround) // KeyDown y KeyUp no funcionan correctamente en el FixedUpdate
+        if (AttackSys.Instance._isWithdrawn == false) // KeyDown y KeyUp no funcionan correctamente en el FixedUpdate
         {
-            rigi.AddForce(Vector3.up * fuerzaSalto);
+            if (Input.GetKeyDown(KeyCode.Space) && isGround)
+            {
+                StartCoroutine(JumpingCoRutine());
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space) && isGround)
+            {
+                StartCoroutine(SwordJumpingCoRutine());
+            }
         }
 
         if (Input.GetKey(KeyCode.W))
         {
             AnimationController.Instance.Moving();
         }
-
+        
+        if (AttackSys.Instance._isWithdrawn == true)
+        {
+            if (Input.GetKey(KeyCode.W))
+            {
+                AnimationController.Instance.notMoving();
+                AnimationController.Instance.SwordRun();
+            }
+            else
+            {
+                AnimationController.Instance.notSwordRun();
+            }
+        }
+        
         if (Input.GetKeyUp(KeyCode.W))
         {
             AnimationController.Instance.notMoving();
@@ -65,6 +88,22 @@ public class CharacterController : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position + checkgroundPosition, checkGroundRatio);
+    }
+
+    IEnumerator JumpingCoRutine()
+    {
+        AnimationController.Instance.jumping();
+        yield return new WaitForSeconds(1.2f);
+        rigi.AddForce(Vector3.up * fuerzaSalto);
+        yield break;
+    }
+    
+    IEnumerator SwordJumpingCoRutine()
+    {
+        AnimationController.Instance.SwordJumping();
+        yield return new WaitForSeconds(0.5f);
+        rigi.AddForce(Vector3.up * fuerzaSalto);
+        yield break;
     }
     
 }

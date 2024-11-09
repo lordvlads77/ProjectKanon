@@ -10,8 +10,12 @@ namespace ProjectSaga
         public static AnimationController Instance { get; private set; }
         [SerializeField] private Animator _animator = default;
         private readonly int _IsMoving = Animator.StringToHash("isMoving");
-        private readonly int _isJumping = Animator.StringToHash("isJumping");
         private readonly int _Withdrawing = Animator.StringToHash("Withdrawing");
+        private readonly int _attacking = Animator.StringToHash("Attacking");
+        private readonly int _isSwordRunning = Animator.StringToHash("isSwordRunning");
+        private readonly int _jumping = Animator.StringToHash("jumping");
+        private readonly int _sheating = Animator.StringToHash("Sheathing");
+        private readonly int _swordJumping = Animator.StringToHash("SwordJump");
 
         public void Awake()
         {
@@ -34,17 +38,37 @@ namespace ProjectSaga
 
         public void jumping()
         {
-            _animator.SetBool(_isJumping, true);
-        }
-
-        public void notJumping()
-        {
-            _animator.SetBool(_isJumping, false);
+            _animator.SetTrigger(_jumping);
         }
 
         public void WithdrawingWeapon()
         {
             _animator.SetTrigger(_Withdrawing);
+        }
+
+        public void WeaponSlash()
+        {
+            _animator.SetTrigger(_attacking);
+        }
+
+        public void SwordRun()
+        {
+            _animator.SetBool(_isSwordRunning, true);
+        }
+        
+        public void notSwordRun()
+        {
+            _animator.SetBool(_isSwordRunning, false);
+        }
+
+        public void Sheating()
+        {
+            _animator.SetTrigger(_sheating);
+        }
+        
+        public void SwordJumping()
+        {
+            _animator.SetTrigger(_swordJumping);
         }
     }
 }

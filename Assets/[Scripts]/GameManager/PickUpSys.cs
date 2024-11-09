@@ -13,7 +13,7 @@ public class PickUpSys : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        Instance = this;    
         if (Instance != this)
         {
             Destroy(gameObject);
