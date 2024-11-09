@@ -57,7 +57,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Patroling()
     {
-        
+        AnimationController.Instance.ZombieMove();
         if (!walkPointSet)
         {
             SearchWalkPoint();

@@ -19,7 +19,7 @@ public class DamageSys : MonoBehaviour
             _life--;
             if (_life <= 0)
             {
-                GameManager.Instance.PlayerDeath();
+                GameManager.Instance.Death();
             }
         }
     }

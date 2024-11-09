@@ -9,6 +9,7 @@ namespace ProjectSaga
     {
         public static AnimationController Instance { get; private set; }
         [SerializeField] private Animator _animator = default;
+        [SerializeField] private Animator _zombieAnimator = default;
         private readonly int _IsMoving = Animator.StringToHash("isMoving");
         private readonly int _Withdrawing = Animator.StringToHash("Withdrawing");
         private readonly int _attacking = Animator.StringToHash("Attacking");
@@ -76,12 +77,12 @@ namespace ProjectSaga
 
         public void ZombieMove()
         {
-            _animator.SetFloat(_speed, 1);
+            _zombieAnimator.SetFloat(_speed, 1);
         }
         
         public void ZombieAttack()
         {
-            _animator.SetTrigger(_zombieAttack);
+            _zombieAnimator.SetTrigger(_zombieAttack);
         }
     }
 }
