@@ -12,10 +12,8 @@ public class EnemyAI : MonoBehaviour
     public Transform player;
     public LayerMask whatisGround;
     public LayerMask whatisPlayer;
-    public float enemyHealth;
-    public Animator anim;
-    
-    
+
+
     [Header("Patrolling")] 
     public Vector3 walkPoint;
     private bool walkPointSet;
@@ -24,13 +22,15 @@ public class EnemyAI : MonoBehaviour
     [Header("Attacking")]
     public float timeBetweenAttacks;
     private bool alreadyAttacked;
-    public GameObject projectile;
-    
+
     [Header("States")]
     public float sightRange;
     public float attackRange;
     public bool playerInSightRange;
     public bool playerInAttackRange;
+    
+    [Header("Death Event")]
+    [SerializeField] private GameObject _deathObj = default;
 
     private void Awake()
     {
@@ -56,11 +56,15 @@ public class EnemyAI : MonoBehaviour
         {
             AttackPlayer();   
         }
+        if (playerInAttackRange && playerInSightRange && DamageSys.Instance._isDead == true)
+        {
+            Dying();
+        }
     }
 
     private void Patroling()
     {
-        
+        AnimationController.Instance.ZombieMove();
         if (!walkPointSet)
         {
             SearchWalkPoint();
@@ -68,7 +72,7 @@ public class EnemyAI : MonoBehaviour
         if (walkPointSet)
         {
             agent.SetDestination(walkPoint);
-            AnimationController.Instance.Moving();
+            
         }
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
@@ -95,6 +99,7 @@ public class EnemyAI : MonoBehaviour
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
+        AnimationController.Instance.ZombieMove();
     }
 
     private void AttackPlayer()
@@ -105,10 +110,7 @@ public class EnemyAI : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-            
+            AnimationController.Instance.ZombieAttack();
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -119,26 +121,24 @@ public class EnemyAI : MonoBehaviour
         alreadyAttacked = false;
     }
 
-    public void TakeDamage(int damage)
+    private void Dying()
     {
-        enemyHealth -= damage;
-
-        if (enemyHealth <= 0)
-        {
-            Invoke(nameof(DestroyEnemy), .5f);
-        }
+        StartCoroutine(Death());
     }
-
-    public void DestroyEnemy()
-    {
-        Destroy(gameObject);
-    }
-
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, sightRange);
+    }
+
+    IEnumerator Death()
+    {
+        AnimationController.Instance.ZombieDeath();
+        agent.isStopped = true;
+        yield return new WaitForSeconds(2.6f);
+        Destroy(_deathObj);
     }
 }
