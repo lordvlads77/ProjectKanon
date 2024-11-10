@@ -28,6 +28,9 @@ public class EnemyAI : MonoBehaviour
     public float attackRange;
     public bool playerInSightRange;
     public bool playerInAttackRange;
+    
+    [Header("Death Event")]
+    [SerializeField] private GameObject _deathObj = default;
 
     private void Awake()
     {
@@ -52,6 +55,10 @@ public class EnemyAI : MonoBehaviour
         if (playerInAttackRange && playerInSightRange)
         {
             AttackPlayer();   
+        }
+        if (playerInAttackRange && playerInSightRange && DamageSys.Instance._isDead == true)
+        {
+            Dying();
         }
     }
 
@@ -104,7 +111,6 @@ public class EnemyAI : MonoBehaviour
         if (!alreadyAttacked)
         {
             AnimationController.Instance.ZombieAttack();
-            Debug.Log("Attacked");
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -114,6 +120,11 @@ public class EnemyAI : MonoBehaviour
     {
         alreadyAttacked = false;
     }
+
+    private void Dying()
+    {
+        StartCoroutine(Death());
+    }
     
     private void OnDrawGizmosSelected()
     {
@@ -121,5 +132,13 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, sightRange);
+    }
+
+    IEnumerator Death()
+    {
+        AnimationController.Instance.ZombieDeath();
+        agent.isStopped = true;
+        yield return new WaitForSeconds(2.6f);
+        Destroy(_deathObj);
     }
 }

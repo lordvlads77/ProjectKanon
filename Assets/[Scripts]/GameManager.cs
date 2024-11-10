@@ -10,7 +10,6 @@ namespace ProjectSaga
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
-        [SerializeField] private GameObject _deathActor = default;
 
         private void Awake()
         {
@@ -21,17 +20,7 @@ namespace ProjectSaga
             }
         }
 
-        public void Death()
-        {
-            if (_deathActor.CompareTag("Player"))
-            {
-                PlayerDeath();
-            }
-            else if (_deathActor.CompareTag("Enemy"))
-            {
-                EnemyDeath();
-            }
-        }
+        
 
         public void PlayerDeath()
         {
@@ -40,7 +29,7 @@ namespace ProjectSaga
 
         public void EnemyDeath()
         {
-            //TODO: Add Whatever needs to be added here in the future
+            Debug.Log("Enemy is Dead");
         }
 
         public void PlayGame()

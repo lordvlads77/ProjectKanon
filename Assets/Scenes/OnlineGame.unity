@@ -31204,11 +31204,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3902647951710748670, guid: cbdd0022af79dec408d2471a5b15ec1e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.23321678
+      value: 0.23321673
       objectReference: {fileID: 0}
     - target: {fileID: 3902647951710748670, guid: cbdd0022af79dec408d2471a5b15ec1e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.03843857
+      value: 0.038438566
       objectReference: {fileID: 0}
     - target: {fileID: 3902647951710748670, guid: cbdd0022af79dec408d2471a5b15ec1e, type: 3}
       propertyPath: m_LocalRotation.y
@@ -31216,7 +31216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3902647951710748670, guid: cbdd0022af79dec408d2471a5b15ec1e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.15801695
+      value: -0.15801698
       objectReference: {fileID: 0}
     - target: {fileID: 3902647951794126524, guid: cbdd0022af79dec408d2471a5b15ec1e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -32285,9 +32285,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5149c87a887a90c42b3dab6b9174aa62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
-  _enemy: {fileID: 0}
-  _deathActor: {fileID: 0}
 --- !u!4 &1226611627
 Transform:
   m_ObjectHideFlags: 0
@@ -55585,6 +55582,7 @@ MonoBehaviour:
   attackRange: 1.86
   playerInSightRange: 0
   playerInAttackRange: 0
+  _deathObj: {fileID: 2492881794766186838}
 --- !u!4 &4828903192880841351
 Transform:
   m_ObjectHideFlags: 0
@@ -55865,6 +55863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageDealer: {fileID: 598768018}
+  _isDead: 0
   _life: 3
 --- !u!136 &4830203709803311251
 CapsuleCollider:
