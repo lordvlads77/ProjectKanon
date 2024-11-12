@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using FishNet.Object;
 using ProjectSaga;
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour
+public class CharacterController : NetworkBehaviour
 {
     public float velocidad;
     public float velocidadRotacion;
@@ -20,10 +21,21 @@ public class CharacterController : MonoBehaviour
     public bool isGround;
     public float checkGroundRatio;
     public LayerMask checkGroundMask;
-    
 
+
+    public override void OnStartNetwork()
+    {
+        if (Owner.IsLocalClient) // The Owner
+        {
+            name += " (Local)";
+        }
+    }
     private void FixedUpdate()
     {
+        if (IsOwner == false)
+        {
+            return;
+        }
         movimiento.x = Input.GetAxisRaw("Horizontal") * velocidad;
         movimiento.z = Input.GetAxisRaw("Vertical") * velocidad;
         movimiento = transform.TransformDirection(movimiento); // Transforma una direccion local en direccion del mundo.
@@ -36,6 +48,10 @@ public class CharacterController : MonoBehaviour
 
     private void Update()
     {
+        if (IsOwner == false)
+        {
+            return;
+        }
         if (Input.GetKey(KeyCode.Q))
         {
             transform.Rotate(Vector3.up * -velocidadRotacion * Time.deltaTime);

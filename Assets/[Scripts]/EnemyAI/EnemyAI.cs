@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FishNet.Object;
 using ProjectSaga;
 using UnityEngine;
 using UnityEngine.AI;
@@ -32,6 +33,9 @@ public class EnemyAI : MonoBehaviour
     [Header("Death Event")]
     [SerializeField] private GameObject _deathObj = default;
 
+    /*public override void OnStartNetwork()
+    {
+    }*/
     private void Awake()
     {
         player = GameObject.FindWithTag("Player").transform;
