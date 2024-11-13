@@ -60,7 +60,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8fef106c939c4d4faf16d8d05f9ba4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playScreen: {fileID: 0}
   _pauseScreen: {fileID: 0}
   _saveScreen: {fileID: 0}
   _deathScreen: {fileID: 0}
@@ -79,6 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0283bdd861327e44c963132e8c40f7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   _animator: {fileID: 0}
 --- !u!82 &4913941751694242582
 AudioSource:

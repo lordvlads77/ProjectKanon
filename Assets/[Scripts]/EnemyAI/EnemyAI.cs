@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : NetworkBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
@@ -33,14 +33,13 @@ public class EnemyAI : MonoBehaviour
     [Header("Death Event")]
     [SerializeField] private GameObject _deathObj = default;
 
-    /*public override void OnStartNetwork()
-    {
-    }*/
-    private void Awake()
+    public override void OnStartNetwork()
     {
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
     }
+    
+    
 
     private void Update()
     {
@@ -68,7 +67,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Patroling()
     {
-        AnimationController.Instance.ZombieMove();
+        //AnimationController.Instance.ZombieMove();
         if (!walkPointSet)
         {
             SearchWalkPoint();
@@ -103,7 +102,7 @@ public class EnemyAI : MonoBehaviour
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
-        AnimationController.Instance.ZombieMove();
+        //AnimationController.Instance.ZombieMove();
     }
 
     private void AttackPlayer()
@@ -114,7 +113,7 @@ public class EnemyAI : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            AnimationController.Instance.ZombieAttack();
+            //AnimationController.Instance.ZombieAttack();
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -140,7 +139,7 @@ public class EnemyAI : MonoBehaviour
 
     IEnumerator Death()
     {
-        AnimationController.Instance.ZombieDeath();
+        //AnimationController.Instance.ZombieDeath();
         agent.isStopped = true;
         yield return new WaitForSeconds(2.6f);
         Destroy(_deathObj);
