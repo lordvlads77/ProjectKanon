@@ -35,7 +35,7 @@ public class EnemyAI : NetworkBehaviour
 
     public override void OnStartNetwork()
     {
-        player = GameObject.FindWithTag("Player").transform;
+        //player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
     }
     
@@ -67,7 +67,7 @@ public class EnemyAI : NetworkBehaviour
 
     private void Patroling()
     {
-        //AnimationController.Instance.ZombieMove();
+        ZombieAnimController.Instance.ZombieMove();
         if (!walkPointSet)
         {
             SearchWalkPoint();
@@ -102,7 +102,7 @@ public class EnemyAI : NetworkBehaviour
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
-        //AnimationController.Instance.ZombieMove();
+        ZombieAnimController.Instance.ZombieMove();
     }
 
     private void AttackPlayer()
@@ -113,7 +113,7 @@ public class EnemyAI : NetworkBehaviour
 
         if (!alreadyAttacked)
         {
-            //AnimationController.Instance.ZombieAttack();
+            ZombieAnimController.Instance.ZombieAttack();
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -139,7 +139,7 @@ public class EnemyAI : NetworkBehaviour
 
     IEnumerator Death()
     {
-        //AnimationController.Instance.ZombieDeath();
+        ZombieAnimController.Instance.ZombieDeath();
         agent.isStopped = true;
         yield return new WaitForSeconds(2.6f);
         Destroy(_deathObj);
