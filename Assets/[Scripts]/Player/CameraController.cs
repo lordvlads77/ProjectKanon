@@ -1,20 +1,22 @@
-using System;
+/*using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using UnityEngine;
 
 public class CameraController : NetworkBehaviour
 {
-    [SerializeField] private CinemachineVirtualCamera _virtualCamera = default;
+    //readonly SyncVar<CinemachineVirtualCamera> _virtualCamera = new SyncVar<CinemachineVirtualCamera>();
+    readonly SyncVar<GameObject> _followCamera = new SyncVar<GameObject>();
 
-    public override void OnStartClient()
+    public override void OnStartNetwork() 
     {
-        base.OnStartClient();
-        if (IsOwner)
+        base.OnStartNetwork();
+        if (Owner.IsLocalClient)
         {
-            AssignVirtualCamera();
+            AssignVirtualCameraServer();
             EnableCamera();
         }
         else
@@ -22,18 +24,24 @@ public class CameraController : NetworkBehaviour
             DisableCamera();
         }
     }
-
-
-    private void AssignVirtualCamera()
+    
+    [ServerRpc] // Una funcion que se ejecuta en el servidor
+    private void AssignVirtualCameraServer()
     {
-        GameObject _followCamera = GameObject.FindWithTag("FollowCamera");
+        Debug.Log("Se asigno la camara virtual");
+        if (IsOwner == false)
+        {
+            return;
+        }
+        //GameObject _followCamera = GameObject.FindWithTag("FollowCamera");
+        _followCamera.NetworkBehaviour = GameObject.FindWithTag("FollowCamera");
         if (_followCamera != null)
         {
-            _virtualCamera = _followCamera.GetComponent<CinemachineVirtualCamera>();
+            _virtualCamera.NetworkBehaviour = _followCamera.NetworkBehaviour.GetComponent<CinemachineVirtualCamera>();
             if (_virtualCamera != null)
             {
-                _virtualCamera.Follow = transform;
-                _virtualCamera.LookAt = transform;
+                _virtualCamera.NetworkBehaviour.Follow = transform;
+                _virtualCamera.NetworkBehaviour.LookAt = transform;
                 Debug.Log($"Camera assigned to {gameObject.name}");
             }
             else
@@ -46,23 +54,33 @@ public class CameraController : NetworkBehaviour
             Debug.LogError("FollowCamera object not found in the scene.");
         }
     }
+    [ServerRpc] // Una funcion que se ejecuta en el servidor
     private void EnableCamera()
     {
+        if (IsOwner == false)
+        {
+            return;
+        }
         if (_virtualCamera != null)
         {
-            _virtualCamera.gameObject.SetActive(true);
-            _virtualCamera.Priority = 10;
+            _virtualCamera.NetworkBehaviour.gameObject.SetActive(true);
+            _virtualCamera.NetworkBehaviour.Priority = 10;
             Debug.Log($"Camera enabled for {gameObject.name}");
         }
     }
     
+    [ServerRpc]
     private void DisableCamera()
     {
+        if (IsOwner == false)
+        {
+            return;
+        }
         if (_virtualCamera != null)
         {
-            _virtualCamera.gameObject.SetActive(false);
-            _virtualCamera.Priority = 0;
+            _virtualCamera.NetworkBehaviour.gameObject.SetActive(false);
+            //_virtualCamera.NetworkBehaviour.Priority = 0;
             Debug.Log($"Camera disabled for {gameObject.name}");
         }
     }
-}
+}*/
