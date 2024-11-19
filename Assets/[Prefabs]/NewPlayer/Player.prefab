@@ -3771,9 +3771,9 @@ MonoBehaviour:
   rigi: {fileID: 5951320606320893697}
   animController: {fileID: 3226553864029572812}
   attackSys: {fileID: 5951320606320893699}
-  checkgroundPosition: {x: 0, y: 0.2, z: 0}
+  checkgroundPosition: {x: 0, y: -0.35, z: 0}
   isGround: 0
-  checkGroundRatio: 0.32
+  checkGroundRatio: 0.4
   checkGroundMask:
     serializedVersion: 2
     m_Bits: 55
@@ -3804,9 +3804,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.2714032
-  m_Height: 2.1084719
+  m_Height: 2.0571578
   m_Direction: 1
-  m_Center: {x: -0.032531023, y: 1.020542, z: 0.02846992}
+  m_Center: {x: -0.032531023, y: 1.0461992, z: 0.028469915}
 --- !u!114 &5951320606320893699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3819,6 +3819,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74eae7c6e3b49c64e8df9e02ad4a3f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 1
+  _addedNetworkObject: {fileID: 3226553864029572809}
+  _networkObjectCache: {fileID: 3226553864029572809}
   _weaponfbx: {fileID: 3935495414041256943}
   _swordSheathfbx: {fileID: 3935495413788944347}
   _isWithdrawn: 0
@@ -3835,7 +3838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0283bdd861327e44c963132e8c40f7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 1
+  _componentIndexCache: 2
   _addedNetworkObject: {fileID: 3226553864029572809}
   _networkObjectCache: {fileID: 3226553864029572809}
   _animator: {fileID: 3226553864029572814}
@@ -3877,6 +3880,7 @@ MonoBehaviour:
   <PredictedOwner>k__BackingField: {fileID: 0}
   NetworkBehaviours:
   - {fileID: 5951320606320893696}
+  - {fileID: 5951320606320893699}
   - {fileID: 3226553864029572812}
   - {fileID: 4675615883143174170}
   - {fileID: 3226553864029572815}
@@ -3923,7 +3927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 2
+  _componentIndexCache: 3
   _addedNetworkObject: {fileID: 3226553864029572809}
   _networkObjectCache: {fileID: 3226553864029572809}
   _componentConfiguration: 0
@@ -3966,7 +3970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 3
+  _componentIndexCache: 4
   _addedNetworkObject: {fileID: 3226553864029572809}
   _networkObjectCache: {fileID: 3226553864029572809}
   IgnoredParameters: []
@@ -3988,7 +3992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc0b75c3c18afa43837981486389ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 4
+  _componentIndexCache: 5
   _addedNetworkObject: {fileID: 3226553864029572809}
   _networkObjectCache: {fileID: 3226553864029572809}
   _virtualCamera: {fileID: 3429553139811614656}
