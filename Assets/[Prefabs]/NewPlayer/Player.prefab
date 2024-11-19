@@ -299,7 +299,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3935495413788944346
 Transform:
   m_ObjectHideFlags: 0
@@ -3770,6 +3770,7 @@ MonoBehaviour:
   fuerzaSalto: 300
   rigi: {fileID: 5951320606320893697}
   animController: {fileID: 3226553864029572812}
+  attackSys: {fileID: 5951320606320893699}
   checkgroundPosition: {x: 0, y: 0.2, z: 0}
   isGround: 0
   checkGroundRatio: 0.32

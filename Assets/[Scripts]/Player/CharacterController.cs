@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FishNet.Object;
 using ProjectSaga;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CharacterController : NetworkBehaviour
 {
@@ -15,8 +16,11 @@ public class CharacterController : NetworkBehaviour
     [Header("Referencia")]
     public Rigidbody rigi;
     
+    [Header("Animation Controller")]
     public ProjectSaga.AnimationController animController;
     
+    [FormerlySerializedAs("AttackSys")] [Header("Attack System")]
+    public AttackSys attackSys;
     
     [Header("CheckGround")]
     public Vector3 checkgroundPosition;
@@ -63,7 +67,7 @@ public class CharacterController : NetworkBehaviour
         {
             transform.Rotate(Vector3.up * velocidadRotacion * Time.deltaTime);
         }
-        if (AttackSys.Instance._isWithdrawn == false) // KeyDown y KeyUp no funcionan correctamente en el FixedUpdate
+        if (attackSys._isWithdrawn == false) // KeyDown y KeyUp no funcionan correctamente en el FixedUpdate
         {
             if (Input.GetKeyDown(KeyCode.Space) && isGround)
             {
@@ -83,7 +87,7 @@ public class CharacterController : NetworkBehaviour
             animController.Moving();
         }
         
-        if (AttackSys.Instance._isWithdrawn == true)
+        if (attackSys._isWithdrawn == true)
         {
             if (Input.GetKey(KeyCode.W))
             {
