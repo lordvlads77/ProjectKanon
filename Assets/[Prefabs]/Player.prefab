@@ -69,6 +69,7 @@ MonoBehaviour:
   velocidadRotacion: 100
   fuerzaSalto: 250
   rigi: {fileID: 7208827820360772373}
+  animController: {fileID: 0}
   checkgroundPosition: {x: 0, y: 0.2, z: 0}
   isGround: 0
   checkGroundRatio: 0.32

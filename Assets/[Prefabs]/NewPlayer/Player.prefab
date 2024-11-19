@@ -3769,6 +3769,7 @@ MonoBehaviour:
   velocidadRotacion: 100
   fuerzaSalto: 300
   rigi: {fileID: 5951320606320893697}
+  animController: {fileID: 3226553864029572812}
   checkgroundPosition: {x: 0, y: 0.2, z: 0}
   isGround: 0
   checkGroundRatio: 0.32
@@ -3820,6 +3821,7 @@ MonoBehaviour:
   _weaponfbx: {fileID: 3935495414041256943}
   _swordSheathfbx: {fileID: 3935495413788944347}
   _isWithdrawn: 0
+  animController: {fileID: 3226553864029572812}
 --- !u!114 &3226553864029572812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3988,7 +3990,7 @@ MonoBehaviour:
   _componentIndexCache: 4
   _addedNetworkObject: {fileID: 3226553864029572809}
   _networkObjectCache: {fileID: 3226553864029572809}
-  _virtualCamera: {fileID: 0}
+  _virtualCamera: {fileID: 3429553139811614656}
 --- !u!1 &7118128613652393459
 GameObject:
   m_ObjectHideFlags: 0

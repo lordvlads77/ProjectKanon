@@ -8,7 +8,6 @@ namespace ProjectSaga
 {
     public class AnimationController : NetworkBehaviour
     {
-        public static AnimationController Instance { get; private set; }
         [SerializeField] private Animator _animator = default;
         private readonly int _IsMoving = Animator.StringToHash("isMoving");
         private readonly int _Withdrawing = Animator.StringToHash("Withdrawing");
@@ -17,16 +16,7 @@ namespace ProjectSaga
         private readonly int _jumping = Animator.StringToHash("jumping");
         private readonly int _sheating = Animator.StringToHash("Sheathing");
         private readonly int _swordJumping = Animator.StringToHash("SwordJump");
-
-
-        public void Awake()
-        {
-            Instance = this;
-            if (Instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
+        
 
         public void Moving()
         {

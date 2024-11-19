@@ -15,6 +15,8 @@ public class CharacterController : NetworkBehaviour
     [Header("Referencia")]
     public Rigidbody rigi;
     
+    public ProjectSaga.AnimationController animController;
+    
     
     [Header("CheckGround")]
     public Vector3 checkgroundPosition;
@@ -78,25 +80,25 @@ public class CharacterController : NetworkBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            AnimationController.Instance.Moving();
+            animController.Moving();
         }
         
         if (AttackSys.Instance._isWithdrawn == true)
         {
             if (Input.GetKey(KeyCode.W))
             {
-                AnimationController.Instance.notMoving();
-                AnimationController.Instance.SwordRun();
+                animController.notMoving();
+                animController.SwordRun();
             }
             else
             {
-                AnimationController.Instance.notSwordRun();
+                animController.notSwordRun();
             }
         }
         
         if (Input.GetKeyUp(KeyCode.W))
         {
-            AnimationController.Instance.notMoving();
+            animController.notMoving();
         }
     }
 
@@ -108,7 +110,7 @@ public class CharacterController : NetworkBehaviour
 
     IEnumerator JumpingCoRutine()
     {
-        AnimationController.Instance.jumping();
+        animController.jumping();
         yield return new WaitForSeconds(1.2f);
         rigi.AddForce(Vector3.up * fuerzaSalto);
         yield break;
@@ -116,7 +118,7 @@ public class CharacterController : NetworkBehaviour
     
     IEnumerator SwordJumpingCoRutine()
     {
-        AnimationController.Instance.SwordJumping();
+        animController.SwordJumping();
         yield return new WaitForSeconds(0.5f);
         rigi.AddForce(Vector3.up * fuerzaSalto);
         yield break;

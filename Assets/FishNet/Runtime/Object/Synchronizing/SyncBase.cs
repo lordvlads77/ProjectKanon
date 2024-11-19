@@ -46,7 +46,7 @@ namespace FishNet.Object.Synchronizing.Internal
         /// <summary>
         /// NetworkBehaviour this SyncVar belongs to.
         /// </summary>
-        public CinemachineVirtualCamera NetworkBehaviour = null;
+        public NetworkBehaviour NetworkBehaviour = null;
         /// <summary>
         /// True if the server side has initialized this SyncType.
         /// </summary>

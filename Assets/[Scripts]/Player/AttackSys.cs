@@ -10,6 +10,8 @@ public class AttackSys : MonoBehaviour
     [SerializeField] private GameObject _swordSheathfbx = default;
     private Animator _animator = default;
     public bool _isWithdrawn = false;
+    public ProjectSaga.AnimationController animController;
+
     
 
     
@@ -47,7 +49,7 @@ public class AttackSys : MonoBehaviour
             }
             else
             {
-                AnimationController.Instance.WeaponSlash();
+                animController.WeaponSlash();
             }
         }
 
@@ -67,7 +69,7 @@ public class AttackSys : MonoBehaviour
 
     IEnumerator WithdrawingSequence()
     { 
-        AnimationController.Instance.WithdrawingWeapon();
+        animController.WithdrawingWeapon();
         yield return new WaitForSeconds(0.5f);
         _swordSheathfbx.SetActive(false);
         yield return new WaitForSeconds(0.3f);
@@ -77,7 +79,7 @@ public class AttackSys : MonoBehaviour
     
     IEnumerator SheetingSequence()
     {
-        AnimationController.Instance.Sheating();
+        animController.Sheating();
         yield return new WaitForSeconds(0.8f);
         _weaponfbx.SetActive(false);
         yield return new WaitForSeconds(0.3f);
