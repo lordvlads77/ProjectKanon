@@ -1,42 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using FishNet.Object;
 using ProjectSaga;
 using UnityEngine;
 
-public class AttackSys : MonoBehaviour
+public class AttackSys : NetworkBehaviour
 {
-    public static AttackSys Instance { get; private set; }
     [SerializeField] private GameObject _weaponfbx = default;
     [SerializeField] private GameObject _swordSheathfbx = default;
     private Animator _animator = default;
     public bool _isWithdrawn = false;
+    public ProjectSaga.AnimationController animController;
     
 
     
     
     void Awake()
     {
-        Instance = this;
-        if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
         _animator = GetComponent<Animator>();
     }
     void Update()
     {
-        
+        if (IsOwner == false)
+        {
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (PickUpSys.Instance._isPicked == false)
-            {
-                Debug.Log("No weapon picked up");
-            }
-            else
-            {
-                StartCoroutine(WithdrawingSequence());
-                _isWithdrawn = true;
-            }
+            StartCoroutine(WithdrawingSequence());
+            _isWithdrawn = true;
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -47,7 +39,7 @@ public class AttackSys : MonoBehaviour
             }
             else
             {
-                AnimationController.Instance.WeaponSlash();
+                animController.WeaponSlash();
             }
         }
 
@@ -67,7 +59,7 @@ public class AttackSys : MonoBehaviour
 
     IEnumerator WithdrawingSequence()
     { 
-        AnimationController.Instance.WithdrawingWeapon();
+        animController.WithdrawingWeapon();
         yield return new WaitForSeconds(0.5f);
         _swordSheathfbx.SetActive(false);
         yield return new WaitForSeconds(0.3f);
@@ -77,7 +69,7 @@ public class AttackSys : MonoBehaviour
     
     IEnumerator SheetingSequence()
     {
-        AnimationController.Instance.Sheating();
+        animController.Sheating();
         yield return new WaitForSeconds(0.8f);
         _weaponfbx.SetActive(false);
         yield return new WaitForSeconds(0.3f);
