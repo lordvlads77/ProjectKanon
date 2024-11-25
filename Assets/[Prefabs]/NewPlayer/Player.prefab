@@ -3720,11 +3720,12 @@ GameObject:
   - component: {fileID: 5951320606320893727}
   - component: {fileID: 5951320606320893699}
   - component: {fileID: 3226553864029572812}
+  - component: {fileID: 1663305086180908367}
+  - component: {fileID: 6319590302047670109}
   - component: {fileID: 3226553864029572814}
   - component: {fileID: 3226553864029572809}
   - component: {fileID: 4675615883143174170}
   - component: {fileID: 3226553864029572815}
-  - component: {fileID: 1663305086180908367}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -3842,6 +3843,38 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 3226553864029572809}
   _networkObjectCache: {fileID: 3226553864029572809}
   _animator: {fileID: 3226553864029572814}
+--- !u!114 &1663305086180908367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5951320606320893705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cc0b75c3c18afa43837981486389ea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 5
+  _addedNetworkObject: {fileID: 3226553864029572809}
+  _networkObjectCache: {fileID: 3226553864029572809}
+  _virtualCamera: {fileID: 3429553139811614656}
+--- !u!114 &6319590302047670109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5951320606320893705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d17e544a52610d1499624d4252e056f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 3226553864029572809}
+  _networkObjectCache: {fileID: 0}
+  _dealerofDmg: {fileID: 0}
 --- !u!95 &3226553864029572814
 Animator:
   serializedVersion: 4
@@ -3980,22 +4013,6 @@ MonoBehaviour:
   _interpolation: 2
   _clientAuthoritative: 1
   _sendToOwner: 0
---- !u!114 &1663305086180908367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5951320606320893705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cc0b75c3c18afa43837981486389ea4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _componentIndexCache: 5
-  _addedNetworkObject: {fileID: 3226553864029572809}
-  _networkObjectCache: {fileID: 3226553864029572809}
-  _virtualCamera: {fileID: 3429553139811614656}
 --- !u!1 &7118128613652393459
 GameObject:
   m_ObjectHideFlags: 0
