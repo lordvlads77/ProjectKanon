@@ -11,7 +11,7 @@ public class AttackSys : NetworkBehaviour
     private Animator _animator = default;
     public bool _isWithdrawn = false;
     public ProjectSaga.AnimationController animController;
-    
+    public ProjectSaga.SFXController sfxController;
 
     
     
@@ -39,7 +39,7 @@ public class AttackSys : NetworkBehaviour
             }
             else
             {
-                animController.WeaponSlash();
+                StartCoroutine(WeaponSlashSequence());
             }
         }
 
@@ -60,6 +60,8 @@ public class AttackSys : NetworkBehaviour
     IEnumerator WithdrawingSequence()
     { 
         animController.WithdrawingWeapon();
+        yield return new WaitForSeconds(0.2f);
+        sfxController.SwordSheath();
         yield return new WaitForSeconds(0.5f);
         _swordSheathfbx.SetActive(false);
         yield return new WaitForSeconds(0.3f);
@@ -74,6 +76,14 @@ public class AttackSys : NetworkBehaviour
         _weaponfbx.SetActive(false);
         yield return new WaitForSeconds(0.3f);
         _swordSheathfbx.SetActive(true);
+        yield break;
+    }
+    
+    IEnumerator WeaponSlashSequence()
+    {
+        animController.WeaponSlash();
+        yield return new WaitForSeconds(0.8f);
+        sfxController.SwordSwing();
         yield break;
     }
 }

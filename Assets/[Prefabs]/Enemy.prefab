@@ -1376,6 +1376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damageDealer: {fileID: 0}
   _isDead: 0
+  sfxController: {fileID: 0}
   _life: 100
 --- !u!1 &1530826397196443208
 GameObject:

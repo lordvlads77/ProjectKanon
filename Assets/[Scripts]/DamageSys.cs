@@ -10,6 +10,7 @@ public class DamageSys : MonoBehaviour
     [Header ("Object Dealer of Damage")]
     [SerializeField] private GameObject _damageDealer = default;
     public bool _isDead = default;
+    public ProjectSaga.SFXController sfxController;
     
     [Header("Life System")]
     [SerializeField]
@@ -26,6 +27,7 @@ public class DamageSys : MonoBehaviour
     
     public void RemovingLife(int amount)
     {
+        sfxController.SwordHit();
         for (int i = 0; i < amount; i++)
         {
             _life--;
