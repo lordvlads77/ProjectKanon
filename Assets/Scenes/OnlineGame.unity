@@ -54439,6 +54439,7 @@ GameObject:
   - component: {fileID: 2492881794766186846}
   - component: {fileID: 2492881794766186847}
   - component: {fileID: 2492881794766186849}
+  - component: {fileID: 2492881794766186850}
   - component: {fileID: 2492881794766186848}
   m_Layer: 0
   m_Name: Enemy
@@ -54505,10 +54506,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14849c52cc6f8e944bacded581f88920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 2492881794766186839}
+  _networkObjectCache: {fileID: 0}
   _damageDealer: {fileID: 8261187894638350517, guid: 3a1abd5b4b94ba54b8ac64b34b7b0757, type: 3}
   _isDead: 0
   sfxController: {fileID: 2492881794766186849}
-  _life: 3
 --- !u!114 &2492881794766186841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54576,6 +54579,7 @@ MonoBehaviour:
   playerInSightRange: 0
   playerInAttackRange: 0
   _deathObj: {fileID: 2492881794766186838}
+  damageSys: {fileID: 2492881794766186840}
 --- !u!195 &2492881794766186845
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -54767,6 +54771,28 @@ MonoBehaviour:
   _swordSwing: {fileID: 0}
   _swordSheath: {fileID: 0}
   _swordHit: {fileID: 8300000, guid: 61cd704cd22acfb4ca8664f5579a1287, type: 3}
+--- !u!114 &2492881794766186850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2492881794766186838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 2492881794766186839}
+  _networkObjectCache: {fileID: 0}
+  IgnoredParameters: []
+  _animator: {fileID: 2492881794766186842}
+  _synchronizeWhenDisabled: 0
+  _smoothFloats: 1
+  _interpolation: 2
+  _clientAuthoritative: 1
+  _sendToOwner: 0
 --- !u!33 &2848910665837295304
 MeshFilter:
   m_ObjectHideFlags: 0

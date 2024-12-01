@@ -32,17 +32,27 @@ public class EnemyAI : NetworkBehaviour
     
     [Header("Death Event")]
     [SerializeField] private GameObject _deathObj = default;
+    
+    public DamageSys damageSys;
 
     public override void OnStartNetwork()
     {
-        //player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        if (IsServerStarted == false)
+        {
+            agent.enabled = false;
+        }
+        //player = GameObject.FindWithTag("Player").transform;
     }
     
     
 
     private void Update()
     {
+        if (IsServerStarted == false)
+        {
+            return;
+        }
         //Check for sight and attack Range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatisPlayer);
@@ -59,7 +69,7 @@ public class EnemyAI : NetworkBehaviour
         {
             AttackPlayer();   
         }
-        if (playerInAttackRange && playerInSightRange && DamageSys.Instance._isDead == true)
+        if (playerInAttackRange && playerInSightRange && damageSys._isDead == true)
         {
             Dying();
         }
