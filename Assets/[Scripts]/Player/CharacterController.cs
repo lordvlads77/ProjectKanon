@@ -69,6 +69,7 @@ public class CharacterController : NetworkBehaviour
         }
         if (attackSys._isWithdrawn == false) // KeyDown y KeyUp no funcionan correctamente en el FixedUpdate
         {
+            //TODO: Remove trigger anims change them to booleans
             if (Input.GetKeyDown(KeyCode.Space) && isGround)
             {
                 StartCoroutine(JumpingCoRutine());

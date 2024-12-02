@@ -1362,6 +1362,7 @@ MonoBehaviour:
   playerInSightRange: 0
   playerInAttackRange: 0
   _deathObj: {fileID: 0}
+  damageSys: {fileID: 0}
 --- !u!114 &1530815808733364223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1374,9 +1375,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14849c52cc6f8e944bacded581f88920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 1
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   _damageDealer: {fileID: 0}
   _isDead: 0
-  _life: 100
+  sfxController: {fileID: 0}
 --- !u!1 &1530826397196443208
 GameObject:
   m_ObjectHideFlags: 0
