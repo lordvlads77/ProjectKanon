@@ -1,20 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using ProjectSaga;
 using UnityEngine;
 
 public class AttackSys : NetworkBehaviour
 {
     [SerializeField] private GameObject _weaponfbx = default;
-    [SerializeField] private GameObject _swordSheathfbx = default;
+    [SerializeField] private GameObject  _swordSheathfbx = default;
     private Animator _animator = default;
     public bool _isWithdrawn = false;
     public ProjectSaga.AnimationController animController;
     public ProjectSaga.SFXController sfxController;
 
-    
-    
+
+    /*public override void OnStartNetwork()
+    {
+        base.OnStartNetwork();
+        //_weaponfbx = GetComponent<MeshRenderer>();
+        if (IsServerStarted == true && _isWithdrawn == true)
+        {
+            
+        }
+    }*/
+
     void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -30,8 +40,12 @@ public class AttackSys : NetworkBehaviour
             StartCoroutine(WithdrawingSequence());
             _isWithdrawn = true;
         }
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            StartCoroutine(NotWithdrawingSequence());
+        }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             if (_isWithdrawn == false)
             {
@@ -40,6 +54,17 @@ public class AttackSys : NetworkBehaviour
             else
             {
                 StartCoroutine(WeaponSlashSequence());
+            }
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (_isWithdrawn == false)
+            {
+                Debug.Log("You need to have your weapon withdrawn first");
+            }
+            else
+            {
+                StartCoroutine(NotSlashing());
             }
         }
 
@@ -73,7 +98,7 @@ public class AttackSys : NetworkBehaviour
     {
         animController.Sheating();
         yield return new WaitForSeconds(0.8f);
-        _weaponfbx.SetActive(false);
+        _weaponfbx.SetActive(true);
         yield return new WaitForSeconds(0.3f);
         _swordSheathfbx.SetActive(true);
         yield break;
@@ -85,5 +110,17 @@ public class AttackSys : NetworkBehaviour
         yield return new WaitForSeconds(0.8f);
         sfxController.SwordSwing();
         yield break;
+    }
+
+    IEnumerator NotWithdrawingSequence()
+    {
+        yield return new WaitForSeconds(1.28f);
+        animController.NotWithdrawing();
+    }
+
+    IEnumerator NotSlashing()
+    {
+        yield return new WaitForSeconds(2.01f);
+        animController.FinishedSlashing();
     }
 }

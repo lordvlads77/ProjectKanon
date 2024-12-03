@@ -10,13 +10,13 @@ namespace ProjectSaga
     {
         [SerializeField] private Animator _animator = default;
         private readonly int _IsMoving = Animator.StringToHash("isMoving");
-        private readonly int _Withdrawing = Animator.StringToHash("Withdrawing");
-        private readonly int _attacking = Animator.StringToHash("Attacking");
         private readonly int _isSwordRunning = Animator.StringToHash("isSwordRunning");
-        private readonly int _jumping = Animator.StringToHash("jumping");
-        private readonly int _sheating = Animator.StringToHash("Sheathing");
-        private readonly int _swordJumping = Animator.StringToHash("SwordJump");
-        
+        private readonly int _isAttacking = Animator.StringToHash("isAttacking");
+        private readonly int _isWithdrawing = Animator.StringToHash("isWithdrawing");
+        private readonly int _isJumping = Animator.StringToHash("isJumping");
+        private readonly int _isSheathing = Animator.StringToHash("isSheathing");
+        private readonly int _isSwordJumping = Animator.StringToHash("isSwordJumping");
+
 
         public void Moving()
         {
@@ -30,17 +30,26 @@ namespace ProjectSaga
 
         public void jumping()
         {
-            _animator.SetTrigger(_jumping);
+            
         }
 
         public void WithdrawingWeapon()
         {
-            _animator.SetTrigger(_Withdrawing);
+            _animator.SetBool(_isWithdrawing, true);
+        }
+        public void NotWithdrawing()
+        {
+            _animator.SetBool(_isWithdrawing, false);
         }
 
         public void WeaponSlash()
         {
-            _animator.SetTrigger(_attacking);
+            _animator.SetBool(_isAttacking, true);
+        }
+
+        public void FinishedSlashing()
+        {
+            _animator.SetBool(_isAttacking, false);
         }
 
         public void SwordRun()
@@ -55,12 +64,12 @@ namespace ProjectSaga
 
         public void Sheating()
         {
-            _animator.SetTrigger(_sheating);
+            
         }
         
         public void SwordJumping()
         {
-            _animator.SetTrigger(_swordJumping);
+            
         }
     }
 }
