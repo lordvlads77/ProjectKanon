@@ -28,9 +28,14 @@ namespace ProjectSaga
             _animator.SetBool(_IsMoving, false);
         }
 
-        public void jumping()
+        public void Jumping()
         {
-            
+            _animator.SetBool(_isJumping, true);
+        }
+        
+        public void NotJumping()
+        {
+            _animator.SetBool(_isJumping, false);
         }
 
         public void WithdrawingWeapon()
@@ -64,12 +69,22 @@ namespace ProjectSaga
 
         public void Sheating()
         {
-            
+            _animator.SetBool(_isSheathing, true);
+        }
+        
+        public void FinishedSheathing()
+        {
+            _animator.SetBool(_isSheathing, false);
         }
         
         public void SwordJumping()
         {
-            
+            _animator.SetBool(_isSwordJumping, true);
+        }
+        
+        public void NotSwordJumping()
+        {
+            _animator.SetBool(_isSwordJumping, false);
         }
     }
 }

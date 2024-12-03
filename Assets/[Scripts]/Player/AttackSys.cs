@@ -37,8 +37,15 @@ public class AttackSys : NetworkBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            StartCoroutine(WithdrawingSequence());
-            _isWithdrawn = true;
+            if (_isWithdrawn == false)
+            {
+                StartCoroutine(WithdrawingSequence());
+                _isWithdrawn = true;
+            }
+            else
+            {
+                Debug.Log("Your already withdrawn your weapon");
+            }
         }
         if (Input.GetKeyUp(KeyCode.R))
         {
@@ -77,7 +84,18 @@ public class AttackSys : NetworkBehaviour
             else
             {
                 StartCoroutine(SheetingSequence());
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.Z))
+        {
+            if (_isWithdrawn == true)
+            {
+                StartCoroutine(NotSheathing());
                 _isWithdrawn = false;
+            }
+            else
+            {
+                Debug.Log("You cannot sheath your weapon if it is already sheathed");
             }
         }
     }
@@ -97,8 +115,10 @@ public class AttackSys : NetworkBehaviour
     IEnumerator SheetingSequence()
     {
         animController.Sheating();
+        yield return new WaitForSeconds(0.46f);
+        sfxController.SwordSheath();
         yield return new WaitForSeconds(0.8f);
-        _weaponfbx.SetActive(true);
+        _weaponfbx.SetActive(false);
         yield return new WaitForSeconds(0.3f);
         _swordSheathfbx.SetActive(true);
         yield break;
@@ -122,5 +142,11 @@ public class AttackSys : NetworkBehaviour
     {
         yield return new WaitForSeconds(2.01f);
         animController.FinishedSlashing();
+    }
+    
+    IEnumerator NotSheathing()
+    {
+        yield return new WaitForSeconds(1.38f);
+        animController.FinishedSheathing();
     }
 }

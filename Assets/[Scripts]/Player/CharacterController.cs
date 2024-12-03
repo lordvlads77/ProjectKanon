@@ -69,10 +69,13 @@ public class CharacterController : NetworkBehaviour
         }
         if (attackSys._isWithdrawn == false) // KeyDown y KeyUp no funcionan correctamente en el FixedUpdate
         {
-            //TODO: Remove trigger anims change them to booleans
             if (Input.GetKeyDown(KeyCode.Space) && isGround)
             {
                 StartCoroutine(JumpingCoRutine());
+            }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                StartCoroutine(NotJumpingSequence());
             }
         }
         else
@@ -80,6 +83,10 @@ public class CharacterController : NetworkBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && isGround)
             {
                 StartCoroutine(SwordJumpingCoRutine());
+            }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                StartCoroutine(NotSwordJumpingSequence());
             }
         }
 
@@ -115,10 +122,16 @@ public class CharacterController : NetworkBehaviour
 
     IEnumerator JumpingCoRutine()
     {
-        animController.jumping();
+        animController.Jumping();
         yield return new WaitForSeconds(1.2f);
         rigi.AddForce(Vector3.up * fuerzaSalto);
         yield break;
+    }
+
+    IEnumerator NotJumpingSequence()
+    {
+        yield return new WaitForSeconds(3.22f);
+        animController.NotJumping();
     }
     
     IEnumerator SwordJumpingCoRutine()
@@ -127,6 +140,12 @@ public class CharacterController : NetworkBehaviour
         yield return new WaitForSeconds(0.5f);
         rigi.AddForce(Vector3.up * fuerzaSalto);
         yield break;
+    }
+
+    IEnumerator NotSwordJumpingSequence()
+    {
+        yield return new WaitForSeconds(1.52f);
+        animController.NotSwordJumping();
     }
     
 }
