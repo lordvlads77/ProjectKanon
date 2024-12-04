@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using FishNet.Object;
@@ -7,12 +8,13 @@ using UnityEngine;
 
 public class AttackSys : NetworkBehaviour
 {
-    [SerializeField] private GameObject _weaponfbx = default;
-    [SerializeField] private GameObject  _swordSheathfbx = default;
+    public GameObject _weaponfbx;
+    public GameObject _swordSheathfbx;
     private Animator _animator = default;
     public bool _isWithdrawn = false;
     public ProjectSaga.AnimationController animController;
     public ProjectSaga.SFXController sfxController;
+    public readonly SyncVar<bool> _isWeaponinUse = new SyncVar<bool>(new SyncTypeSettings(ReadPermission.ExcludeOwner));
 
 
     /*public override void OnStartNetwork()
@@ -28,7 +30,30 @@ public class AttackSys : NetworkBehaviour
     void Awake()
     {
         _animator = GetComponent<Animator>();
+        _isWeaponinUse.OnChange+= IsWeaponinUseOnOnChange;
     }
+
+    private void OnDestroy()
+    {
+        _isWeaponinUse.OnChange -= IsWeaponinUseOnOnChange;
+    }
+
+    private void IsWeaponinUseOnOnChange(bool prev, bool next, bool asserver)
+    {
+        if (asserver)
+        {
+            return;
+        }
+        if (next == true)
+        {
+            StartCoroutine(WithdrawingSequence());
+        }
+        else
+        {
+            StartCoroutine(SheetingSequence());
+        }
+    }
+
     void Update()
     {
         if (IsOwner == false)
@@ -41,6 +66,7 @@ public class AttackSys : NetworkBehaviour
             {
                 StartCoroutine(WithdrawingSequence());
                 _isWithdrawn = true;
+                SetWeaponInUse(true);
             }
             else
             {
@@ -84,6 +110,7 @@ public class AttackSys : NetworkBehaviour
             else
             {
                 StartCoroutine(SheetingSequence());
+                SetWeaponInUse(false);
             }
         }
         if (Input.GetKeyUp(KeyCode.Z))
@@ -100,15 +127,28 @@ public class AttackSys : NetworkBehaviour
         }
     }
 
+    [ServerRpc]
+    public void SetWeaponInUse(bool isWeaponInUse)
+    {
+        _isWeaponinUse.Value = isWeaponInUse;
+    }
+    
     IEnumerator WithdrawingSequence()
     { 
         animController.WithdrawingWeapon();
         yield return new WaitForSeconds(0.2f);
         sfxController.SwordSheath();
         yield return new WaitForSeconds(0.5f);
-        _swordSheathfbx.SetActive(false);
+        if (_isWeaponinUse.Value == true)
+        {
+            _swordSheathfbx.SetActive(false);
+        }
         yield return new WaitForSeconds(0.3f);
-        _weaponfbx.SetActive(true);
+        if (_isWeaponinUse.Value == true)
+        {
+            Debug.Log("Weapon is in Use");
+            _weaponfbx.SetActive(true);
+        }
         yield break;
     }
     
@@ -118,9 +158,16 @@ public class AttackSys : NetworkBehaviour
         yield return new WaitForSeconds(0.46f);
         sfxController.SwordSheath();
         yield return new WaitForSeconds(0.8f);
-        _weaponfbx.SetActive(false);
+        if (_isWeaponinUse.Value == false)
+        {
+            Debug.Log("Weapon is not in use");
+            _weaponfbx.SetActive(false);
+        }
         yield return new WaitForSeconds(0.3f);
-        _swordSheathfbx.SetActive(true);
+        if (_isWeaponinUse.Value == false)
+        {
+            _swordSheathfbx.SetActive(true);
+        }
         yield break;
     }
     
