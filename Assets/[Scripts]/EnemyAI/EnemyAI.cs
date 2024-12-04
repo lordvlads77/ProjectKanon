@@ -43,6 +43,7 @@ public class EnemyAI : NetworkBehaviour
             agent.enabled = false;
         }
         //player = GameObject.FindWithTag("Player").transform;
+        //TODO: Para que se asigne esta variable hacer el script de la lista de players
     }
     
     
