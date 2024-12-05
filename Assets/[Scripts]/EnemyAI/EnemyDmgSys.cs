@@ -13,7 +13,12 @@ public class EnemyDmgSys : NetworkBehaviour
     [SerializeField] private readonly SyncVar<GameObject> _dealerofDmg = new SyncVar<GameObject>();
 
     [Header("Life System")] 
-    private readonly SyncVar<int> _life = new SyncVar<int>(10);
+    private readonly SyncVar<int> _life = new SyncVar<int>(100);
+
+    [Header("Dmg Logic")] 
+    public float damageInterval = 100f;
+    public bool canDoDmg;
+    
 
     public override void OnStartServer()
     {
@@ -57,21 +62,25 @@ public class EnemyDmgSys : NetworkBehaviour
         }
     }
     
-    private void OnTriggerEnter(Collider col)
+    private void OnTriggerStay(Collider other)
     {
         if (!IsServerStarted)
         {
             return;
         }
-        if (col.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
             Debug.Log("Player has been hit");
             RemovingLifeServerRPC(1);
+            StartCoroutine(DamageCooldown());
         }
+        //TODO: Do a timer so I wont remove life each eand every frame
     }
 
-    private void OnTriggerStay(Collider other)
+    IEnumerator DamageCooldown()
     {
-        //TODO: Do a timer so I wont remove life each eand every frame
+        canDoDmg = false;
+        yield return new WaitForSeconds(damageInterval);
+        canDoDmg = true;
     }
 }
