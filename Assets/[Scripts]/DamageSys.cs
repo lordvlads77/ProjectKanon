@@ -16,7 +16,7 @@ public class DamageSys : NetworkBehaviour
     
     [Header("Life System")]
     [SerializeField]
-    public readonly SyncVar<int> _life = new (3);
+    public readonly SyncVar<int> _life = new (10);
 
     private void Awake()
     {
@@ -49,6 +49,7 @@ public class DamageSys : NetworkBehaviour
         if (_damageDealer.CompareTag("DamageDealer"))
         {
             RemovingLife(1);
+            Debug.Log("Enemy has been hit");
         }
     }
 }

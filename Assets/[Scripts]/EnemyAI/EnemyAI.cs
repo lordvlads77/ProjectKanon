@@ -5,6 +5,7 @@ using FishNet.Object;
 using ProjectSaga;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class EnemyAI : NetworkBehaviour
@@ -35,6 +36,8 @@ public class EnemyAI : NetworkBehaviour
     
     public DamageSys damageSys;
 
+    [FormerlySerializedAs("ZombieAnimController")] public ZombieAnimController zombieAnimController;
+
     public override void OnStartNetwork()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -43,7 +46,7 @@ public class EnemyAI : NetworkBehaviour
             agent.enabled = false;
         }
         //player = GameObject.FindWithTag("Player").transform;
-        //TODO: Para que se asigne esta variable hacer el script de la lista de players
+        //Ya no se hara el script de la lista de players porque tiempo
     }
     
     
@@ -64,7 +67,7 @@ public class EnemyAI : NetworkBehaviour
         }
         if (playerInSightRange && !playerInAttackRange)
         {
-            ChasePlayer();
+            //ChasePlayer();
         }
         if (playerInAttackRange && playerInSightRange)
         {
@@ -78,7 +81,8 @@ public class EnemyAI : NetworkBehaviour
 
     private void Patroling()
     {
-        ZombieAnimController.Instance.ZombieMove();
+        zombieAnimController.ZombieStopAttack();
+        zombieAnimController.ZombieMove();
         if (!walkPointSet)
         {
             SearchWalkPoint();
@@ -113,18 +117,18 @@ public class EnemyAI : NetworkBehaviour
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
-        ZombieAnimController.Instance.ZombieMove();
+        zombieAnimController.ZombieMove();
     }
 
     private void AttackPlayer()
     {
         // Make sure enemy does not move
         agent.SetDestination(transform.position);
-        transform.LookAt(player);
+        //transform.LookAt(player);
 
         if (!alreadyAttacked)
         {
-            ZombieAnimController.Instance.ZombieAttack();
+            zombieAnimController.ZombieAttack();
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -137,6 +141,7 @@ public class EnemyAI : NetworkBehaviour
 
     private void Dying()
     {
+        zombieAnimController.ZombieStopAttack();
         StartCoroutine(Death());
     }
     
@@ -150,7 +155,7 @@ public class EnemyAI : NetworkBehaviour
 
     IEnumerator Death()
     {
-        ZombieAnimController.Instance.ZombieDeath();
+        zombieAnimController.ZombieDeath();
         agent.isStopped = true;
         yield return new WaitForSeconds(2.6f);
         Destroy(_deathObj);

@@ -1363,6 +1363,7 @@ MonoBehaviour:
   playerInAttackRange: 0
   _deathObj: {fileID: 0}
   damageSys: {fileID: 0}
+  zombieAnimController: {fileID: 0}
 --- !u!114 &1530815808733364223
 MonoBehaviour:
   m_ObjectHideFlags: 0

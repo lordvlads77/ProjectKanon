@@ -25,6 +25,7 @@ namespace ProjectSaga
         public void PlayerDeath()
         {
             //TODO: Add Whatever needs to be added here in the future
+            Debug.Log("Player is Dead");
         }
 
         public void EnemyDeath()
