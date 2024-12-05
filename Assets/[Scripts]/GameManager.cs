@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using FishNet.Object;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,21 +10,25 @@ namespace ProjectSaga
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance { get; private set; }
+        [SerializeField] public GameObject _LoseCanvas = default;
+        public bool isLoseCanvasActive = false;
 
         private void Awake()
         {
-            Instance = this;
-            if (Instance != this)
-            {
-                Destroy(gameObject);
-            }
         }
-
+        
+        /*public void Start()
+        {
+            _LoseCanvas = GameObject.FindGameObjectWithTag("LoseCanvas");
+        }*/
         
 
         public void PlayerDeath()
         {
+            if (isLoseCanvasActive == false)
+            {
+                _LoseCanvas.SetActive(true);
+            }
             //TODO: Add Whatever needs to be added here in the future
             Debug.Log("Player is Dead");
         }
@@ -38,10 +43,6 @@ namespace ProjectSaga
             //GUI.Instance.playButton();
         }
 
-        public void Start()
-        {
-            //SoundController.Instance.GeneralMusic();
-        }
         
     }    
 }

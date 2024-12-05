@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5149c87a887a90c42b3dab6b9174aa62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _LoseCanvas: {fileID: 0}
+  isLoseCanvasActive: 0
 --- !u!114 &4913941751694242581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,12 +62,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8fef106c939c4d4faf16d8d05f9ba4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pauseScreen: {fileID: 0}
-  _saveScreen: {fileID: 0}
-  _deathScreen: {fileID: 0}
-  _ingamePscreen: {fileID: 0}
-  _saved: {fileID: 0}
-  _loaded: {fileID: 0}
 --- !u!114 &4913941751694242580
 MonoBehaviour:
   m_ObjectHideFlags: 0

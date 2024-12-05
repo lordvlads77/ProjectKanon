@@ -3892,6 +3892,11 @@ MonoBehaviour:
   _componentIndexCache: 255
   _addedNetworkObject: {fileID: 3226553864029572809}
   _networkObjectCache: {fileID: 0}
+  damageInterval: 100
+  canDoDmg: 0
+  _playerObj: {fileID: 5951320606320893705}
+  _youlosecanvas: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!82 &1162764013551839197
 AudioSource:
   m_ObjectHideFlags: 0
