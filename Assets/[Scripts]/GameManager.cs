@@ -2,15 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using FishNet.Object;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace ProjectSaga
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : NetworkBehaviour
     {
         public static GameManager Instance { get; private set; }
-
+        [SerializeField] private GameObject _LoseCanvas = default;
+        [SerializeField] private GameObject _player = default;
+        
         private void Awake()
         {
             Instance = this;
@@ -19,11 +22,10 @@ namespace ProjectSaga
                 Destroy(gameObject);
             }
         }
-
-        
-
         public void PlayerDeath()
         {
+            _LoseCanvas.SetActive(true);
+            Despawn(_player);
             //TODO: Add Whatever needs to be added here in the future
             Debug.Log("Player is Dead");
         }

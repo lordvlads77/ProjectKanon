@@ -1,7 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using ProjectSaga;
@@ -18,7 +15,6 @@ public class EnemyDmgSys : NetworkBehaviour
     [Header("Dmg Logic")] 
     public float damageInterval = 100f;
     public bool canDoDmg;
-    
 
     public override void OnStartServer()
     {
@@ -58,6 +54,7 @@ public class EnemyDmgSys : NetworkBehaviour
             if (_life.Value <= 0)
             {
                 GameManager.Instance.PlayerDeath();
+                break;
             }
         }
     }
@@ -74,7 +71,6 @@ public class EnemyDmgSys : NetworkBehaviour
             RemovingLifeServerRPC(1);
             StartCoroutine(DamageCooldown());
         }
-        //TODO: Do a timer so I wont remove life each eand every frame
     }
 
     IEnumerator DamageCooldown()

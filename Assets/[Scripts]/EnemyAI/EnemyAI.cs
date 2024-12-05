@@ -67,7 +67,7 @@ public class EnemyAI : NetworkBehaviour
         }
         if (playerInSightRange && !playerInAttackRange)
         {
-            //ChasePlayer();
+            ChasePlayer();
         }
         if (playerInAttackRange && playerInSightRange)
         {
