@@ -49,6 +49,7 @@ public class EnemyDmgSys : NetworkBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
+            _life.Value = Mathf.Clamp(_life.Value, 0, 100);
             _life.Value--;
             Debug.Log("Life has been removed " + _life.Value);
             if (_life.Value <= 0)
