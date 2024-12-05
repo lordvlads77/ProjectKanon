@@ -42,7 +42,7 @@ public class Ports
 [Serializable]
 public class Port
 {
-    public uint port;
+    public ushort port;
     public string protocol;
     public string link;
 }
@@ -51,4 +51,16 @@ public class Port
 public class UserIp
 {
     public string public_ip;
+}
+
+[Serializable]
+public class User
+{
+    public string ip;
+}
+
+[Serializable]
+public class Users
+{
+    public List<User> users;
 }
