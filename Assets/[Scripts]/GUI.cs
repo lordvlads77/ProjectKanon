@@ -7,22 +7,8 @@ using UnityEngine.SceneManagement;
 
 namespace ProjectSaga
 {
-    public class GUI : NetworkBehaviour
+    public class GUI : MonoBehaviour
     {
-        public static GUI Instance { get; private set; }
-        public GameObject _losecanvas = default;
-        public GameObject _player = default;
-
-        private void Awake()
-        {
-            Instance = this;
-            if (Instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
-        
-
         public void playButton()
         {
             
@@ -30,7 +16,6 @@ namespace ProjectSaga
 
         public void ReturnToMainMenu()
         {
-            //Despawn(_player, DespawnType.Destroy);
             //_losecanvas.SetActive(false);
         }
     }   

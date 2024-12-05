@@ -1,4 +1,7 @@
+using System;
 using System.Collections;
+using FishNet;
+using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using ProjectSaga;
@@ -15,6 +18,10 @@ public class EnemyDmgSys : NetworkBehaviour
     [Header("Dmg Logic")] 
     public float damageInterval = 100f;
     public bool canDoDmg;
+
+    public GameObject _playerObj;
+
+    public GameManager gameManager;
 
     public override void OnStartServer()
     {
@@ -36,6 +43,10 @@ public class EnemyDmgSys : NetworkBehaviour
         
     }*/
 
+    private void Start()
+    {
+    }
+
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -43,6 +54,7 @@ public class EnemyDmgSys : NetworkBehaviour
         {
             Debug.Log("Client received Dealer of Damage: " + _dealerofDmg.Value);
         }
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
     
     public void RemovingLifeServerRPC(int amount)
@@ -54,7 +66,7 @@ public class EnemyDmgSys : NetworkBehaviour
             Debug.Log("Life has been removed " + _life.Value);
             if (_life.Value <= 0)
             {
-                GameManager.Instance.PlayerDeath();
+                StartCoroutine(DeathScreen());
                 break;
             }
         }
@@ -74,10 +86,35 @@ public class EnemyDmgSys : NetworkBehaviour
         }
     }
 
+    /*public override void OnStopClient()
+    {
+        if (IsOwner == false)
+        {
+            return;
+        }
+        base.OnStopClient();
+        StartCoroutine(DeathScreen());
+    }*/
+
+    private void OnDestroy()
+    {
+        
+    }
+
     IEnumerator DamageCooldown()
     {
         canDoDmg = false;
         yield return new WaitForSeconds(damageInterval);
         canDoDmg = true;
+    }
+
+    IEnumerator DeathScreen()
+    {
+        //_youlosecanvas.SetActive(true);
+        gameManager.PlayerDeath();
+        yield return new WaitForSeconds(0.3f);
+        gameManager.isLoseCanvasActive = false;
+        InstanceFinder.ServerManager.Despawn(_playerObj);
+        
     }
 }

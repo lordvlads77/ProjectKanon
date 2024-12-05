@@ -48,11 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5149c87a887a90c42b3dab6b9174aa62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
   _LoseCanvas: {fileID: 0}
-  _player: {fileID: 0}
+  isLoseCanvasActive: 0
 --- !u!114 &4913941751694242581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,11 +62,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8fef106c939c4d4faf16d8d05f9ba4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 1
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
-  _losecanvas: {fileID: 0}
-  _player: {fileID: 0}
 --- !u!114 &4913941751694242580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,7 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0283bdd861327e44c963132e8c40f7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 2
+  _componentIndexCache: 0
   _addedNetworkObject: {fileID: 0}
   _networkObjectCache: {fileID: 0}
   _animator: {fileID: 0}
