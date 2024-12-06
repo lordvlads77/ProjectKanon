@@ -11,6 +11,7 @@ public class ApiResponse
     public bool linked;
     public string error;
     public SessionUser[] session_users;
+    public SessionUser session_user;
     public Relay relay;
     public string webhook_url;
 }
@@ -63,4 +64,36 @@ public class User
 public class Users
 {
     public List<User> users;
+}
+
+[Serializable]
+public class Sessions
+{
+    public ApiResponse[] sessions;
+    public Pagination pagination;
+    
+}
+
+[Serializable]
+public class Pagination
+{
+    public uint number;
+    public uint next_page_number;
+    public uint previous_page_number;
+    public Paginator paginator;
+    public bool has_next;
+    public bool has_previous;
+}
+
+[Serializable]
+public class Paginator
+{
+    public uint num_pages;
+}
+
+[Serializable]
+public class JoinSession
+{
+    public string session_id;
+    public string user_ip;
 }

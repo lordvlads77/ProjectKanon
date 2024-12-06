@@ -14,6 +14,26 @@ public class EdgegapRelayManager : MonoBehaviour
 {
     [SerializeField] private string relayToken;
     [SerializeField] private EdgegapKcpTransport kcpTransport;
+
+    [SerializeField] GameObject partidasUIGameObject;
+    [SerializeField] Transform partidaItemContainer;
+    [SerializeField] GameObject partidaItemPrefab;
+
+    void ActualizarListaPartidasUI(Sessions sessions)
+    {
+        foreach (Transform child in partidaItemContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (ApiResponse partidaData in sessions.sessions)
+        {
+            GameObject newItem = Instantiate(partidaItemPrefab, partidaItemContainer);
+            PartidaItem partidaItem = newItem.GetComponent<PartidaItem>();
+            partidaItem.SetUp(partidaData, this);
+        }
+    }
+    
     void Start()
     {
         kcpTransport. OnServerConnectionState += OnServerConnectionStateChange;
@@ -31,12 +51,12 @@ public class EdgegapRelayManager : MonoBehaviour
         switch (args.ConnectionState)
         {
             case LocalConnectionState.Stopped:
-                print("Servidor Detenido");
+                partidasUIGameObject.SetActive(true);
                 break;
             case LocalConnectionState.Starting:
+                partidasUIGameObject.SetActive(false);
                 break;
             case LocalConnectionState.Started:
-                print("Servidor Iniciado");
                 break;
             case LocalConnectionState.Stopping:
                 break;
@@ -95,18 +115,96 @@ public class EdgegapRelayManager : MonoBehaviour
             apiResponse = JsonUtility.FromJson<ApiResponse>(response);
             print(response);
         }
-        
+
+        ConectarnosAPartida(apiResponse);
+    }
+
+    void ConectarnosAPartida(ApiResponse apiResponse)
+    {
         //Llegando a este punto el servidor está listo para conectarnos.
+
+        uint userToken = 0;
+        if (apiResponse.session_users != null)
+        {
+            userToken = apiResponse.session_users[0].authorization_token;
+        }
+        else
+        {
+            userToken = apiResponse.session_user.authorization_token;
+        }
         EdgegapRelayData relayData = new EdgegapRelayData(
             apiResponse.relay.ip,
             apiResponse.relay.ports.server.port,
             apiResponse.relay.ports.client.port,
-            apiResponse.session_users[0].authorization_token,
+            userToken,
             apiResponse.authorization_token
         );
 
         kcpTransport.SetEdgegapRelayData(relayData);
-        kcpTransport.StartConnection(true); // Nos conectamos como servidor
+        if (apiResponse.session_users != null)
+        {
+            kcpTransport.StartConnection(true); // Nos conectamos como servidor
+        }
         kcpTransport.StartConnection(false); // Nos conectamos como cliente (nos convertimos en host)
+    }
+
+    public async void RefreshPartidas()
+    {
+        await GetTodasLasPartidasAsync();
+    }
+    
+    async Task GetTodasLasPartidasAsync()
+    {
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", relayToken);
+        HttpResponseMessage responseMessage = await httpClient.GetAsync($"{kEdgegapBaseURL}/relays/sessions");
+        string response = await responseMessage.Content.ReadAsStringAsync();
+
+        Sessions sessions = JsonUtility.FromJson<Sessions>(response);
+        ActualizarListaPartidasUI(sessions);
+    }
+
+    public async Task UnirPartida(string session_id)
+    {
+        // Preguntamos por nuestra IP pública.
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", relayToken);
+        HttpResponseMessage responseMessage = await httpClient.GetAsync($"{kEdgegapBaseURL}/ip");
+        string response = await responseMessage.Content.ReadAsStringAsync();
+        UserIp userIp = JsonUtility.FromJson<UserIp>(response);
+        
+        //Aqui
+        JoinSession joinSessionData = new JoinSession
+        {
+            session_id = session_id,
+            user_ip = userIp.public_ip
+        };
+        string userJson = JsonUtility.ToJson(joinSessionData);
+        HttpContent content = new StringContent(userJson, Encoding.UTF8, "application/json");
+        responseMessage = await httpClient.PostAsync($"{kEdgegapBaseURL}/relays/sessions:authorize-user", content);
+        response = await responseMessage.Content.ReadAsStringAsync();
+        print(response);
+        ApiResponse apiResponse = JsonUtility.FromJson<ApiResponse>(response);
+        
+        ConectarnosAPartida(apiResponse);
+    }
+
+    async Task BorrarPartida(string session_id)
+    {
+        HttpResponseMessage responseMessage = await httpClient.DeleteAsync($"{kEdgegapBaseURL}/relays/sessions/{session_id}");
+        string response = await responseMessage.Content.ReadAsStringAsync();
+    }
+    
+    [ContextMenu("Borrar todas las partidas")]
+    async void DevBorrarTodasPartidas()
+    {
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", relayToken);
+        HttpResponseMessage responseMessage = await httpClient.GetAsync($"{kEdgegapBaseURL}/relays/sessions");
+        string response = await responseMessage.Content.ReadAsStringAsync();
+
+        Sessions sessions = JsonUtility.FromJson<Sessions>(response);
+        foreach (ApiResponse partida in sessions.sessions)
+        {
+            await BorrarPartida(partida.session_id);
+        }
+        print("Todas las partidas fueron borradas");
     }
 }
