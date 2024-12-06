@@ -9,6 +9,7 @@ TagManager:
   - FollowCamera
   - LoseCanvas
   - GameManager
+  - WinCanvas
   layers:
   - Default
   - TransparentFX
