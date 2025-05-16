@@ -2,25 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
-using FishNet.Object;
 using UnityEngine;
 
-public class CameraController : NetworkBehaviour
+public class CameraController : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera _virtualCamera = default;
 
-    public override void OnStartClient()
+    public void Awake()
     {
-        base.OnStartClient();
-        if (IsOwner)
-        {
-            AssignVirtualCamera();
-            EnableCamera();
-        }
-        else
-        {
-            DisableCamera();
-        }
+        AssignVirtualCamera();
+        EnableCamera();
     }
 
 
@@ -42,6 +33,7 @@ public class CameraController : NetworkBehaviour
     
     private void DisableCamera()
     {
+        //TODO: Maybe call this function on the death event?
         if (_virtualCamera != null)
         {
             _virtualCamera.gameObject.SetActive(false);

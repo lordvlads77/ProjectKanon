@@ -1,12 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using FishNet.Object;
 using UnityEngine;
 
 namespace ProjectSaga
 {
-    public class AnimationController : NetworkBehaviour
+    public class AnimationController : MonoBehaviour
     {
         [SerializeField] private Animator _animator = default;
         private readonly int _IsMoving = Animator.StringToHash("isMoving");

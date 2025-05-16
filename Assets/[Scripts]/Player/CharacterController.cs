@@ -1,3 +1,5 @@
+// TODO: Fix the errors in this script
+/*
 using System.Collections;
 using System.Collections.Generic;
 using FishNet.Object;
@@ -149,3 +151,4 @@ public class CharacterController : NetworkBehaviour
     }
     
 }
+*/

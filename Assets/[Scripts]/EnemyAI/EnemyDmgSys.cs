@@ -1,19 +1,15 @@
 using System;
 using System.Collections;
-using FishNet;
-using FishNet.Connection;
-using FishNet.Object;
-using FishNet.Object.Synchronizing;
 using ProjectSaga;
 using UnityEngine;
 
-public class EnemyDmgSys : NetworkBehaviour
+public class EnemyDmgSys : MonoBehaviour
 {
     [Header("Object Dealer of Damage")] 
-    [SerializeField] private readonly SyncVar<GameObject> _dealerofDmg = new SyncVar<GameObject>();
+    [SerializeField] private GameObject _dealerofDmg = default;
 
     [Header("Life System")] 
-    private readonly SyncVar<int> _life = new SyncVar<int>(100);
+    private int _life = 100;
 
     [Header("Dmg Logic")] 
     public float damageInterval = 100f;
@@ -22,11 +18,6 @@ public class EnemyDmgSys : NetworkBehaviour
     public GameObject _playerObj;
 
     public GameManager gameManager;
-
-    public override void OnStartServer()
-    {
-        base.OnStartServer();
-    }
 
     /*public override void OnSpawnServer(NetworkConnection connection)
     {
@@ -45,15 +36,6 @@ public class EnemyDmgSys : NetworkBehaviour
 
     private void Start()
     {
-    }
-
-    public override void OnStartClient()
-    {
-        base.OnStartClient();
-        if (_dealerofDmg != null)
-        {
-            Debug.Log("Client received Dealer of Damage: " + _dealerofDmg.Value);
-        }
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
     
@@ -61,10 +43,10 @@ public class EnemyDmgSys : NetworkBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            _life.Value = Mathf.Clamp(_life.Value, 0, 100);
-            _life.Value--;
-            Debug.Log("Life has been removed " + _life.Value);
-            if (_life.Value <= 0)
+            _life = Mathf.Clamp(_life, 0, 100);
+            _life--;
+            Debug.Log("Life has been removed " + _life);
+            if (_life <= 0)
             {
                 StartCoroutine(DeathScreen());
                 break;
@@ -74,10 +56,6 @@ public class EnemyDmgSys : NetworkBehaviour
     
     private void OnTriggerStay(Collider other)
     {
-        if (!IsServerStarted)
-        {
-            return;
-        }
         if (other.CompareTag("Enemy"))
         {
             Debug.Log("Player has been hit");
@@ -114,7 +92,5 @@ public class EnemyDmgSys : NetworkBehaviour
         gameManager.PlayerDeath();
         yield return new WaitForSeconds(0.3f);
         gameManager.isLoseCanvasActive = false;
-        InstanceFinder.ServerManager.Despawn(_playerObj);
-        
     }
 }

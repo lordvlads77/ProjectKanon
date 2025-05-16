@@ -1,14 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using FishNet.Object;
 using ProjectSaga;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class EnemyAI : NetworkBehaviour
+public class EnemyAI : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
@@ -38,25 +37,16 @@ public class EnemyAI : NetworkBehaviour
 
     [FormerlySerializedAs("ZombieAnimController")] public ZombieAnimController zombieAnimController;
 
-    public override void OnStartNetwork()
+    private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        if (IsServerStarted == false)
-        {
-            agent.enabled = false;
-        }
-        //player = GameObject.FindWithTag("Player").transform;
-        //Ya no se hara el script de la lista de players porque tiempo
     }
+    //agent.enabled = false;
     
     
 
     private void Update()
     {
-        if (IsServerStarted == false)
-        {
-            return;
-        }
         //Check for sight and attack Range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatisPlayer);

@@ -1,12 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using FishNet.Object;
-using FishNet.Object.Synchronizing;
 using ProjectSaga;
 using UnityEngine;
 
-public class DamageSys : NetworkBehaviour
+public class DamageSys : MonoBehaviour
 {
     public static DamageSys Instance { get; private set; }
     [Header ("Object Dealer of Damage")]
@@ -16,7 +14,7 @@ public class DamageSys : NetworkBehaviour
     
     [Header("Life System")]
     [SerializeField]
-    public readonly SyncVar<int> _life = new (10);
+    private int _life = default;
 
     private void Awake()
     {
@@ -32,8 +30,8 @@ public class DamageSys : NetworkBehaviour
         sfxController.SwordHit();
         for (int i = 0; i < amount; i++)
         {
-            _life.Value--;
-            if (_life.Value <= 0)
+            _life--;
+            if (_life <= 0)
             {
                 _isDead = true;
             }
@@ -42,10 +40,6 @@ public class DamageSys : NetworkBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        if (!IsServerStarted)
-        {
-            return;
-        }
         if (_damageDealer.CompareTag("DamageDealer"))
         {
             RemovingLife(1);

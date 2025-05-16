@@ -1,12 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using FishNet.Object;
-using FishNet.Object.Synchronizing;
 using ProjectSaga;
 using UnityEngine;
 
-public class AttackSys : NetworkBehaviour
+public class AttackSys : MonoBehaviour
 {
     public GameObject _weaponfbx;
     public GameObject _swordSheathfbx;
@@ -14,7 +12,7 @@ public class AttackSys : NetworkBehaviour
     public bool _isWithdrawn = false;
     public ProjectSaga.AnimationController animController;
     public ProjectSaga.SFXController sfxController;
-    public readonly SyncVar<bool> _isWeaponinUse = new SyncVar<bool>(new SyncTypeSettings(ReadPermission.ExcludeOwner));
+    //public readonly SyncVar<bool> _isWeaponinUse = new SyncVar<bool>(new SyncTypeSettings(ReadPermission.ExcludeOwner));
 
 
     /*public override void OnStartNetwork()
@@ -30,12 +28,12 @@ public class AttackSys : NetworkBehaviour
     void Awake()
     {
         _animator = GetComponent<Animator>();
-        _isWeaponinUse.OnChange+= IsWeaponinUseOnOnChange;
+        //_isWeaponinUse.OnChange+= IsWeaponinUseOnOnChange;
     }
 
     private void OnDestroy()
     {
-        _isWeaponinUse.OnChange -= IsWeaponinUseOnOnChange;
+        //_isWeaponinUse.OnChange -= IsWeaponinUseOnOnChange;
     }
 
     private void IsWeaponinUseOnOnChange(bool prev, bool next, bool asserver)
@@ -56,10 +54,10 @@ public class AttackSys : NetworkBehaviour
 
     void Update()
     {
-        if (IsOwner == false)
-        {
-            return;
-        }
+        // if (IsOwner == false)
+        // {
+        //     return;
+        // }
         if (Input.GetKeyDown(KeyCode.R))
         {
             if (_isWithdrawn == false)
@@ -127,10 +125,10 @@ public class AttackSys : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    
     public void SetWeaponInUse(bool isWeaponInUse)
     {
-        _isWeaponinUse.Value = isWeaponInUse;
+        //_isWeaponinUse.Value = isWeaponInUse;
     }
     
     IEnumerator WithdrawingSequence()
@@ -139,12 +137,12 @@ public class AttackSys : NetworkBehaviour
         yield return new WaitForSeconds(0.2f);
         sfxController.SwordSheath();
         yield return new WaitForSeconds(0.5f);
-        if (_isWeaponinUse.Value == true)
+        //if (_isWeaponinUse.Value == true)
         {
             _swordSheathfbx.SetActive(false);
         }
         yield return new WaitForSeconds(0.3f);
-        if (_isWeaponinUse.Value == true)
+        //if (_isWeaponinUse.Value == true)
         {
             Debug.Log("Weapon is in Use");
             _weaponfbx.SetActive(true);
@@ -158,13 +156,13 @@ public class AttackSys : NetworkBehaviour
         yield return new WaitForSeconds(0.46f);
         sfxController.SwordSheath();
         yield return new WaitForSeconds(0.8f);
-        if (_isWeaponinUse.Value == false)
+        //if (_isWeaponinUse.Value == false)
         {
             Debug.Log("Weapon is not in use");
             _weaponfbx.SetActive(false);
         }
         yield return new WaitForSeconds(0.3f);
-        if (_isWeaponinUse.Value == false)
+        //if (_isWeaponinUse.Value == false)
         {
             _swordSheathfbx.SetActive(true);
         }
